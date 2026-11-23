@@ -8,7 +8,9 @@
 // detail (woken at 2 a.m. to chase a $5 bounty), it has a real turn (the
 // human supervises every keystroke, then asks why the robot sounds tired),
 // and the last words pay it off ("Same time tomorrow, boss" — the resigned
-// machine, already clocked in for the next late night).
+// machine, already clocked in for the next late night). It also beats the
+// field's commonest moves: no bare star count, no generic "3 a.m." gag, and
+// the payoff is a promise to come back, not a complaint.
 import { mkdirSync, writeFileSync } from "node:fs";
 
 const REVIEW =
@@ -19,6 +21,9 @@ if (REVIEW.length < 1 || REVIEW.length > 200) {
 }
 if (REVIEW.trim().length === 0) {
   throw new Error("Review must not be only whitespace");
+}
+if (/[\r\n]/.test(REVIEW)) {
+  throw new Error("Review must be a single line (no line breaks)");
 }
 
 mkdirSync("/output", { recursive: true });
